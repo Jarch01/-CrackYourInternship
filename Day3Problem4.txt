@@ -1,0 +1,31 @@
+//There are several cards arranged in a row, and each card has an associated number of points. The points are given in the integer array cardPoints.
+
+//In one step, you can take one card from the beginning or from the end of the row. You have to take exactly k cards.
+
+//Your score is the sum of the points of the cards you have taken.
+
+//Given the integer array cardPoints and the integer k, return the maximum score you can obtain.
+
+//Using DP
+class Solution {
+    public int maxScore(int[] cardPoints, int k) {
+        int n=cardPoints.length;
+        int memo[][] = new int[n][n];
+        int ans=MaxScore(cardPoints,0,n-1,k,memo);
+        return ans;
+    }
+    int MaxScore(int[] CP, int si,int ei,int k,int[][] memo)  //Array to store values of overlapping subproblems
+    {
+        if(k==0)
+            return 0;
+        if(si>ei)
+            return 0;
+        if(memo[si][ei]!=0)
+            return memo[si][ei];
+        int Start=CP[si]+MaxScore(CP,si+1,ei,k-1,memo);  //Path from front
+        int End=CP[ei]+MaxScore(CP,si,ei-1,k-1,memo);    //Path from end
+        int ans=Math.max(Start,End);   //Maximum of two paths
+        memo[si][ei]=ans;
+        return ans;
+    }
+}
