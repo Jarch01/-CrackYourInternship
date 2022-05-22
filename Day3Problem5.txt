@@ -1,0 +1,25 @@
+//You are climbing a staircase. It takes n steps to reach the top.
+
+//Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
+
+//Using DP
+class Solution {
+    public int climbStairs(int n) {
+        int ans=PossibleWays(n,0,new HashMap<Integer,Integer>());
+        return ans;
+    }
+    public int PossibleWays(int n,int ci,HashMap<Integer,Integer> memo) //HashMap to store overlapping sub problems
+    {
+        if(ci==n)
+            return 1;
+        if(ci>n)
+            return 0;
+        int key=ci;
+        if(memo.containsKey(key))
+            return memo.get(key);
+        int onejump=PossibleWays(n,ci+1,memo);  //Path of one jump
+        int twojump=PossibleWays(n,ci+2,memo);  //Path of two jumps
+        memo.put(key,onejump+twojump);
+        return onejump+twojump;     //Total number of paths
+    }
+}
