@@ -1,0 +1,37 @@
+//Given a string s containing only digits, return the number of ways to decode it.
+
+class Solution {
+    public int numDecodings(String s) {
+        int ans=TotalWays(s,0,"",new HashMap<Integer,Integer>());
+        return ans;
+    }
+    public int TotalWays(String s,int ci,String check,HashMap<Integer,Integer> memo)
+    {
+        if(ci>s.length())  //if String is empty
+            return 0;
+        if(Check(check)==false) //if taken string is invalid
+            return 0;
+        if(ci==s.length())  //if the string is successfully divided
+            return 1;
+        if(s.charAt(ci)=='0')  //if a character is 0
+            return 0;
+        int key=ci;
+        if(memo.containsKey(key))
+            return memo.get(key);
+        int pathA=TotalWays(s,ci+1,"",memo);
+        int pathB=0;
+        if(ci+1<s.length())
+        pathB=TotalWays(s,ci+2,s.charAt(ci)+""+s.charAt(ci+1),memo);
+        memo.put(key,pathA+pathB);
+        return pathA+pathB;
+    }
+    public boolean Check(String s)   //Function to check the validity of the String taken
+    {
+        if(s.length()==0)
+            return true;
+        int val=Integer.parseInt(s);
+        if(val>=10&&val<=26)
+            return true;
+        return false;
+    }
+}
