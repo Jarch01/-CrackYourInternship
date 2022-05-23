@@ -1,0 +1,34 @@
+//You are given an integer array nums. You want to maximize the number of points you get by performing the following operation any number of times:
+
+//Pick any nums[i] and delete it to earn nums[i] points. Afterwards, you must delete every element equal to nums[i] - 1 and every element equal to nums[i] + 1.
+
+//Return the maximum number of points you can earn by applying the above operation some number of times.
+
+class Solution {
+    public int deleteAndEarn(int[] nums) {
+        HashMap<Integer,Integer> memo = new HashMap<>();
+        int max=0;
+        for(int i=0;i<nums.length;i++)
+        {
+            if(nums[i]>max)
+                max=nums[i];
+        }
+        int a[] = new int[max+1]; //Array to store the frequency of each element
+        for(int i=0;i<nums.length;i++) 
+            a[nums[i]]++;
+        int ans=MaxEarn(0,a,memo);
+        return ans;
+    }
+    public int MaxEarn(int ci, int []n, HashMap<Integer,Integer> memo)
+    {
+        if(ci>=n.length)  //length is out of bounds
+            return 0;
+        int key=ci;
+        if(memo.containsKey(key))
+            return memo.get(key);
+        int take=ci*n[ci]+MaxEarn(ci+2,n,memo);   //all the value is taken and next element is ignored by taking two steps
+        int leave=MaxEarn(ci+1,n,memo);   //no value is taken and current index is skipped
+        memo.put(key,Math.max(take,leave));
+        return Math.max(take,leave);
+    }
+}
