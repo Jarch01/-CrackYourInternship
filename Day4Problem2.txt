@@ -1,0 +1,28 @@
+//You are given an integer array coins representing coins of different denominations and an integer amount representing a total amount of money.
+
+//Return the fewest number of coins that you need to make up that amount. If that amount of money cannot be made up by any combination of the coins, return -1.
+
+class Solution {
+    public int coinChange(int[] coins, int amount) {
+        int lowest=MinPath(coins,0,amount,new HashMap<String,Integer>());
+        if(lowest==100001)   //if no path is suitable
+            return -1;
+        return lowest;
+    }
+    public int MinPath(int []a,int ci, int tsum,HashMap<String,Integer>memo)
+    {
+        if(ci==a.length)
+            return 100001; //reach the end of array
+        if(tsum==0) //if we achieve the target
+        return 0;
+        String key=ci+"-"+tsum;
+        if(memo.containsKey(key))
+            return memo.get(key);
+        int pathA=100001,pathB;
+        if(a[ci]<=tsum)
+            pathA=1+MinPath(a,ci,tsum-a[ci],memo);
+        pathB=MinPath(a,ci+1,tsum,memo);
+        memo.put(key,Math.min(pathA,pathB));
+        return Math.min(pathA,pathB);
+    }
+}
