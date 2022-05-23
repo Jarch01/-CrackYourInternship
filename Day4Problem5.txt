@@ -1,0 +1,46 @@
+import java.util.*;
+class Solution {
+    public boolean canCross(int[] stones) {
+        HashMap<Integer,Integer> check= new HashMap<>();  //To store occurance of stones
+        for(int i=0;i<stones.length;i++)
+        check.put(stones[i],1);
+        int target=stones[stones.length-1];
+        boolean ans=Cross(check,1,1,target,new HashMap<String,Boolean>());
+        return ans;
+        
+    }
+    public boolean Cross(HashMap<Integer,Integer> a,int ci,int k,int target,HashMap<String,Boolean> memo)
+    {
+        if(k<=0)   //No jump taken or backward jump
+            return false;
+        
+        if(ci>target)     //passed the target
+            return false;
+        
+        if(ci==target)   //Reach the target 
+            return true;
+        
+        if(a.containsKey(ci)==false)  //If no stone present the jump is not possible
+            return false;
+        
+        String key=""+ci+"-"+k;
+        if(memo.containsKey(key))
+            return memo.get(key);
+        
+        boolean pathA=false,pathB=false,pathC=false;
+        
+        pathA=Cross(a,ci+k-1,k-1,target,memo); //Path for k-1 jump
+        if(pathA){
+        memo.put(key,true);
+        return true;}
+        
+        pathB=Cross(a,ci+k,k,target,memo);  //Path for k jump
+        if(pathB){
+        memo.put(key,true);
+        return true;}
+        
+        pathC=Cross(a,ci+k+1,k+1,target,memo);  //Path for k+1 jump
+        memo.put(key,pathC);
+        return (pathC);
+    }
+}
