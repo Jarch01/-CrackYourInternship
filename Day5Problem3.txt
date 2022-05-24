@@ -1,0 +1,18 @@
+//Given the root of a binary tree, check whether it is a mirror of itself (i.e., symmetric around its center).
+
+class Solution {
+    public boolean isSymmetric(TreeNode root) {
+        boolean ans = Check(root.left,root.right); //Check forleft and right childe path
+        return ans;
+    }
+    public boolean Check(TreeNode root1,TreeNode root2)
+    {
+        if(root1==null&&root2==null)   //both are null so its symmetric
+            return true;
+        if(root1==null||root2==null||root1.val!=root2.val)  //if one condition fails its not symmetric
+            return false;
+        boolean left = Check(root1.right,root2.left);  //left path 
+        boolean right = Check(root1.left,root2.right);  //right path
+        return left&&right;
+    }
+}
