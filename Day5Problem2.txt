@@ -1,0 +1,13 @@
+//Given the root of a binary tree, invert the tree, and return its root.
+
+class Solution {
+    public TreeNode invertTree(TreeNode root) {
+        if(root==null)
+            return root;
+        TreeNode Lans = invertTree(root.left);
+        TreeNode Rans = invertTree(root.right);
+        root.left=Rans;   //Replace the left childe with right one
+        root.right=Lans;
+        return root;
+    }
+}
