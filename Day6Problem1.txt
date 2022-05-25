@@ -1,0 +1,18 @@
+//Given the root of a binary tree, return the inorder traversal of its nodes' values
+
+class Solution {
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> ans = new ArrayList<>(); //Array to return the inorder answers
+        InOrder(root,ans);
+        return ans;
+    }
+    public void InOrder(TreeNode root, List<Integer> ans)
+    {
+        if(root==null)
+            return ;
+        InOrder(root.left,ans);  //First left node is accessed
+        ans.add(root.val);       //The data is then accessed
+        InOrder(root.right,ans); //Lastly Right node is accessed
+        return ;
+    }
+}
