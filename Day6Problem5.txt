@@ -1,0 +1,24 @@
+//Given the root of a binary tree, return the sum of all left leaves.
+
+//A leaf is a node with no children. A left leaf is a leaf that is the left child of another node.
+
+class Solution {
+    public int sumOfLeftLeaves(TreeNode root) {
+        int ans[] = new int[1];
+        LeftLeafSum(root,ans,false);
+        return ans[0];
+    }
+    public void LeftLeafSum(TreeNode root,int[] sum,boolean isLeft) //isLeft to check the path is from left child
+    {
+        if(root==null)
+            return ;
+        if(root.left==null&&root.right==null&&isLeft==true) 
+        {
+            sum[0]=sum[0]+root.val; //Adding the value to answer
+            return ;
+        }
+        LeftLeafSum(root.left,sum,true); //Left Path traversal
+        LeftLeafSum(root.right,sum,false); //Right Path traversal
+        return ;
+    }
+}
