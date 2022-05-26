@@ -1,0 +1,21 @@
+//Given the root of a binary search tree, and an integer k, return the kth smallest value (1-indexed) of all the values of the nodes in the tree.
+
+class Solution {
+    public int kthSmallest(TreeNode root, int k) {
+        int a[] = new int[2];
+        a[0]=k;   //Reference of K
+        InOrderSearch(root,a);
+        return a[1];
+    }
+    public void InOrderSearch(TreeNode root,int[] a) //Inorder traversal
+    {
+        if(root==null)
+            return ;
+        InOrderSearch(root.left,a); //Left child is traverse
+        a[0]--;       //Decreasing the value of k for every element
+        if(a[0]==0)   
+            a[1]=root.val;   //When the value of k becomes zero the answer is stored
+        InOrderSearch(root.right,a);  //Right child is traverse
+        return ;
+    }
+}
