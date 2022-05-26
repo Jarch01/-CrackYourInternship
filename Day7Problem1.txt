@@ -1,0 +1,22 @@
+//Given an integer columnNumber, return its corresponding column title as it appears in an Excel sheet.
+
+//Algorithm for any series naming
+
+class Solution {
+    public String convertToTitle(int columnNumber) {
+        int n=columnNumber;
+        String str="";
+        while(n!=0) //Until the value becomes 0
+        {
+            int r=n%26; //The remainder represents the character
+            if(r==0) //if r becomes zero then its the last element
+            {
+                n--;   //Inorder to pass on to next value
+                r=26;  //signifies the last element
+            }
+            str=(char)('A'-1+r)+str; //Addng the character to the answer string
+            n=n/26;
+        }
+        return str;
+    }
+}
