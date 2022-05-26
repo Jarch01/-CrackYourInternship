@@ -1,0 +1,20 @@
+//Given the root of a binary tree, determine if it is a valid binary search tree (BST).
+
+class Solution {
+    List<Integer> list = new ArrayList<>(); //To store the values of in order traversal
+    public boolean isValidBST(TreeNode root) {
+        inOrder(root);
+        for(int i = 1; i < list.size(); i++) { //Traverse the list
+            if(list.get(i) <= list.get(i - 1)) //Checking whether the list is sorted or not
+                return false;
+        }
+        return true;
+    }
+    
+    public void inOrder(TreeNode root){ //Inorder traversal of the given Tree
+        if(root == null) return;
+        inOrder(root.left);
+        list.add(root.val);
+        inOrder(root.right);
+    }
+}
