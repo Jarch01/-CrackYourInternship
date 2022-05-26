@@ -1,0 +1,33 @@
+//Given the root of a binary tree, the value of a target node target, and an integer k, return an array of the values of all nodes that have a distance k from the target node.
+
+class Solution {
+    public List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
+        HashMap<TreeNode,TreeNode> memo = new HashMap<>();
+        Parenting(root,memo,null);
+        List<Integer> ans = new ArrayList<>();
+        HashSet<TreeNode> set = new HashSet<>(); //HashSet for checking visited nodes
+        Searching(target,memo,set,ans,k);
+        return ans;
+    }
+    public void Searching(TreeNode root, HashMap<TreeNode,TreeNode> memo,HashSet<TreeNode> set, List<Integer> ans,int k)
+    {
+        if(root==null||set.contains(root)) //HashSet for checking any previously visite node is revisited or not
+            return ;
+        if(k==0)  //Adding the nodes when k becomes zero
+            ans.add(root.val);
+        set.add(root);
+        Searching(root.left,memo,set,ans,k-1);  //Path for left child
+        Searching(root.right,memo,set,ans,k-1); //Path for right child
+        Searching(memo.get(root),memo,set,ans,k-1); //Path for traver by parent
+        return; 
+    }
+    public void Parenting(TreeNode root, HashMap<TreeNode,TreeNode> memo,TreeNode parent)  //Populating the hashmap for traversing backward from child to parent
+    {
+        if(root==null)
+            return ;
+        memo.put(root,parent);
+        Parenting(root.left,memo,root);
+        Parenting(root.right,memo,root);
+        return ;
+    }
+}
