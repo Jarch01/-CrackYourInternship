@@ -1,0 +1,19 @@
+//Given the root of a binary tree, imagine yourself standing on the right side of it, return the values of the nodes you can see ordered from top to bottom.
+
+class Solution {
+    public List<Integer> rightSideView(TreeNode root) {
+        List<Integer> ans = new ArrayList<>();
+        RightView(root,0,ans);
+        return ans;
+    }
+    public void RightView(TreeNode root,int len,List<Integer> ans)
+    {
+        if(root==null)
+            return ;
+        if(ans.size()==len) //Sincd the length of list is the max length of the newly visited node
+            ans.add(root.val);
+        RightView(root.right,len+1,ans); //Traversing right child first for right view
+        RightView(root.left,len+1,ans);
+        return ;
+    }
+}
